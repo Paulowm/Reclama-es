@@ -58,12 +58,12 @@ plt.show()
 
 
 df_time = df.groupby(['Empresa', 'TEMPO']).size().reset_index(name='reclamacoes')
-fig = px.line(df_time, x='TEMPO', y='reclamacoes', color='Empresa', title='Reclamações por empresa')
+fig = px.line(df_time, x='TEMPO', y='reclamacoes', color='Empresa', title='Reclamações por Empresa')
 st.plotly_chart(fig)
 
 df_uf = df.groupby(['UF', 'STATUS']).size().reset_index(name='reclamacoes')
 fig = px.bar(df_uf, x='UF', y='reclamacoes', color='STATUS', title='Reclamações por estado e status')
 st.plotly_chart(fig)
 
-fig = px.histogram(df, x='empresa', title='Distribuição do número de palavras na descrição')
+fig = px.histogram(df, x='Empresa', title='Distribuição do número de palavras na descrição')
 st.plotly_chart(fig)
