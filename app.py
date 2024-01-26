@@ -4,16 +4,16 @@ import plotly.express as px
 #--------------------------
 import pandas as pd
 
-hapvida=pd.read_csv('RECLAMEAQUI_HAPVIDA.csv', sep=',')
-ibyte=pd.read_csv('RECLAMEAQUI_IBYTE.csv', sep=',')
-nagem=pd.read_csv('RECLAMEAQUI_NAGEM.csv', sep=',')
+HAPVIDA=pd.read_csv('RECLAMEAQUI_HAPVIDA.csv', sep=',')
+IBYTE=pd.read_csv('RECLAMEAQUI_IBYTE.csv', sep=',')
+NAGEM=pd.read_csv('RECLAMEAQUI_NAGEM.csv', sep=',')
 
-hapvida['empresa'] = 'Hapvida'
-ibyte['empresa'] = 'Ibyte'
-nagem['empresa'] = 'Nagem'
+HAPVIDA['Empresa'] = 'Hapvida'
+IBYTE['Empresa'] = 'Ibyte'
+NAGEM['Empresa'] = 'Nagem'
 
 # unindo os dataframes
-df = pd.concat([hapvida, ibyte, nagem])
+df = pd.concat([HAPVIDA, IBYTE, NAGEM])
 
 # converte a coluna 'TEMPO' para datetime
 df['TEMPO'] = pd.to_datetime(df['TEMPO'])
@@ -28,9 +28,9 @@ total_reclamacoes=df['ID'].count()
 #--------------------------
 
 
-st.title("Reclamações")
+st.title("Reclame Aqui - HAPVIDA IBYTE NAGEM")
 
-empresas_select = st.sidebar.selectbox('Selecione a empresa', empresas)
+empresas_select = st.sidebar.selectbox('Selecione a Empresa', empresas)
 uf_select = st.sidebar.selectbox('Selecione o estado', ufs)
 status_select = st.sidebar.selectbox('Selecione o status', status)
 qtd_palavras_select = st.sidebar.slider(
@@ -44,11 +44,11 @@ st.metric(label="Total Reclamações", value=total_reclamacoes)
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-serie_temporal = df.groupby([df['TEMPO'], 'empresa']).size().reset_index(name='reclamacoes')
+serie_temporal = df.groupby([df['TEMPO'], 'Empresa']).size().reset_index(name='reclamacoes')
 print(serie_temporal)
 
 plt.figure(figsize=(15, 8))
-sns.lineplot(data=serie_temporal, x='TEMPO', y='reclamacoes', hue='empresa')
+sns.lineplot(data=serie_temporal, x='TEMPO', y='reclamacoes', hue='Empresa')
 plt.xticks(rotation=45)
 plt.title('Histograma de Reclamações por Empresa e Data')
 plt.xlabel('Data')
@@ -57,8 +57,8 @@ plt.show()
 #--------------------------
 
 
-df_time = df.groupby(['empresa', 'TEMPO']).size().reset_index(name='reclamacoes')
-fig = px.line(df_time, x='TEMPO', y='reclamacoes', color='empresa', title='Reclamações por empresa')
+df_time = df.groupby(['Empresa', 'TEMPO']).size().reset_index(name='reclamacoes')
+fig = px.line(df_time, x='TEMPO', y='reclamacoes', color='Empresa', title='Reclamações por empresa')
 st.plotly_chart(fig)
 
 df_uf = df.groupby(['UF', 'STATUS']).size().reset_index(name='reclamacoes')
